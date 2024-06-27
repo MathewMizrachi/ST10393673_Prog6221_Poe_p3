@@ -1,0 +1,86 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Recipe Manager" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Margin="10">
+            <TextBlock Text="Recipe Name:" Margin="5"/>
+            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
+
+            <Button Content="Add Recipe" Command="{Binding AddRecipeCommand}" Margin="10"/>
+
+            <TextBlock Text="Instruction:" Margin="5"/>
+            <TextBox Text="{Binding NewInstruction}" Margin="5"/>
+            <Button Content="Add Instruction" Command="{Binding AddInstructionCommand}" Margin="5"/>
+
+            <TextBlock Text="Ingredient Name:" Margin="5"/>
+            <TextBox Text="{Binding NewIngredientName}" Margin="5"/>
+
+            <TextBlock Text="Quantity:" Margin="5"/>
+            <TextBox Text="{Binding NewIngredientQuantity}" Margin="5"/>
+
+            <TextBlock Text="Unit:" Margin="5"/>
+            <TextBox Text="{Binding NewIngredientUnit}" Margin="5"/>
+
+            <TextBlock Text="Calories:" Margin="5"/>
+            <TextBox Text="{Binding NewIngredientCalories}" Margin="5"/>
+
+            <TextBlock Text="Food Group:" Margin="5"/>
+            <ComboBox ItemsSource="{Binding FoodGroups}" SelectedItem="{Binding SelectedFoodGroup}" Margin="5"/>
+
+            <Button Content="Add Ingredient" Command="{Binding AddIngredientCommand}" Margin="5"/>
+
+            <Button Content="Apply Filter" Command="{Binding ApplyFilterCommand}" Margin="5"/>
+            <Button Content="Remove Filter" Command="{Binding RemoveFilterCommand}" Margin="5"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Margin="10">
+            <TextBlock Text="Recipes:" FontWeight="Bold" FontSize="16" Margin="5"/>
+            <ListBox ItemsSource="{Binding FilteredRecipes}" SelectedItem="{Binding SelectedRecipe}" DisplayMemberPath="Name" Margin="5"/>
+
+            <Button Content="Add to Menu" Command="{Binding AddToMenuCommand}" Margin="5"/>
+
+            <TextBlock Text="Menu:" FontWeight="Bold" FontSize="16" Margin="5"/>
+            <ListBox ItemsSource="{Binding Menu}" DisplayMemberPath="Name" Margin="5"/>
+
+            <TextBlock Text="Total Menu Calories:" FontWeight="Bold" FontSize="16" Margin="5"/>
+            <TextBlock Text="{Binding TotalMenuCalories}" Margin="5"/>
+
+            <TextBlock Text="Selected Recipe:" FontWeight="Bold" FontSize="16" Margin="5"/>
+            <TextBlock Text="{Binding SelectedRecipe.Name}" Margin="5"/>
+
+            <TextBlock Text="Ingredients:" FontWeight="Bold" FontSize="16" Margin="5"/>
+            <ItemsControl ItemsSource="{Binding SelectedRecipe.Ingredients}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="5">
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Quantity, StringFormat='Quantity: {0}'}"/>
+                            <TextBlock Text="{Binding Unit, StringFormat='Unit: {0}'}"/>
+                            <TextBlock Text="{Binding Calories, StringFormat='Calories: {0}'}"/>
+                            <TextBlock Text="{Binding FoodGroup, StringFormat='Food Group: {0}'}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock Text="Instructions:" FontWeight="Bold" FontSize="16" Margin="5"/>
+            <ItemsControl ItemsSource="{Binding SelectedRecipe.Instructions}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" Margin="5"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </Grid>
+</Window>
